@@ -11,7 +11,7 @@ public class InstantiateBulletsShooting : MonoBehaviour
     [SerializeField] private float _delay;
     [SerializeField] private Rigidbody _rigidbody;
 
-    private isWork = true;
+    private _isWork = true;
     
     private void Start() 
     {
@@ -22,7 +22,7 @@ public class InstantiateBulletsShooting : MonoBehaviour
     {
         float delay = new WaitForSeconds(_delay);
 
-        while (isWork)
+        while (_isWork)
         {
             Vector3 direction = (_target.position - transform.position).normalized;
             var newBullet = Instantiate(_bulletPrefab, transform.position + direction, Quaternion.identity);

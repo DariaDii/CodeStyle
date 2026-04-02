@@ -2,37 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoPlaces : MonoBehaviour
+public class MovementByWaypoints : MonoBehaviour
 {
     [SerializeField] private float _speed;
-    [SerializeField] private Transform _allPlacesPoint;
-    [SerializeField] private Transform[] _arrayPlaces;
-    [SerializeField] private int _numberOfCurrentPlace;
+    [SerializeField] private Transform _waypointsConteiner;
+    [SerializeField] private Transform[] _arrayWaypoints;
+    [SerializeField] private int _numberOfCurrentPoint;
 
     private float _distanceToTargetPoint = 0.1f;
 
     private void Start() 
     {
-        _arrayPlaces = new Transform[_allPlacesPoint.childCount];
+        _arrayWaypoints = new Transform[_waypointsConteiner.childCount];
 
-        for (int i = 0; i < _allPlacesPoint.childCount; i++)
-            _arrayPlaces[i] = _allPlacesPoint.GetChild(i);
+        for (int i = 0; i < _waypointsConteiner.childCount; i++)
+            _arrayWaypoints[i] = _waypointsConteiner.GetChild(i);
     }
 
     private void Update()
     {
-        var currentPlace = _arrayPlaces[_numberOfCurrentPlace];
-        transform.position = Vector3.MoveTowards(transform.position , currentPlace.position, _speed * Time.deltaTime);
+        var currentPoint = _arrayWaypoints[_numberOfCurrentPoint];
+        transform.position = Vector3.MoveTowards(transform.position , currentPoint.position, _speed * Time.deltaTime);
 
-        if ((transform.position - currentPlace.position).sqrMagnitude < _distanceToTargetPoint)
-            GetNextPlace();
+        if ((transform.position - currentPoint.position).sqrMagnitude < _distanceToTargetPoint)
+            ChangeToNextPoint();
     }
 
-    private void GetNextPlace()
+    private void ChangeToNextPoint()
     {
-        _numberOfCurrentPlace++;
+        _numberOfCurrentPoint++;
 
-        if (_numberOfCurrentPlace == _arrayPlaces.Length)
-            _numberOfCurrentPlace = 0;
+        if (_numberOfCurrentPoint == _arrayWaypoints.Length)
+            _numberOfCurrentPoint = 0;
     }
 }
